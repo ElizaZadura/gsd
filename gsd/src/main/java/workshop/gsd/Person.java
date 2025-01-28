@@ -18,15 +18,10 @@ public class Person {
      * @throws IllegalArgumentException If firstName, lastName, or email is null, or firstName/lastName contains invalid characters, or the email has an incorrect format
      */
     public Person(String firstName, String lastName, String email) {
-        // Input validation:
-        if (firstName == null || lastName == null || email == null) {
-            throw new IllegalArgumentException("First name, last name, and email cannot be null.");
-        } else if (!firstName.matches("[a-zA-Z]+") || !lastName.matches("[a-zA-Z]+")) {
-            throw new InvalidNameFormatException("First and last name must contain only letters.");
-        } else if (!isValidEmail(email)) {
-            throw new InvalidEmailFormatException("Invalid email format!");
-        }
-        //TODO: autogenerate ID instead of taking it as a parameter
+        validateName(firstName);
+        validateName(lastName);
+        validateEmail(email);
+
         this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,9 +39,7 @@ public class Person {
     }
 
     public void setFirstName(String firstName) {
-        if (firstName == null) {
-            throw new IllegalArgumentException("First name cannot be null.");
-        }
+        validateName(firstName);
         this.firstName = firstName;
     }
 
@@ -55,9 +48,7 @@ public class Person {
     }
 
     public void setLastName(String lastName) {
-        if (lastName == null) {
-            throw new IllegalArgumentException("Last name cannot be null.");
-        }
+        validateName(lastName);
         this.lastName = lastName;
     }
 
@@ -66,19 +57,17 @@ public class Person {
     }
 
     public void setEmail(String email) {
-        if (!isValidEmail(email)) {
-            throw new InvalidEmailFormatException("Invalid email format!");
-        }
+        validateEmail(email);
         this.email = email;
     }
 
     /**
      * Returns a summary description of the Person object.
      *
-     * @return A string in the format "{id: 4, name: Nisse Olsson, email: nisse@gmail.com}".
-     * TODO: change name
+     * @return A string in the format "{id: 4, name: First Name, email: Iam@you.com}".
+     * In this case, using String.format seems preferable, due to readability, and it also ensures correct data types are used for formatting
      */
-    //in this case, using String.format seems preferable, due to readability, and it also ensures correct data types are used for formatting
+
     public String getSummary() {
         return String.format("{id: %s, name: %s %s, email: %s}", id, firstName, lastName, email);
     }
@@ -94,8 +83,18 @@ public class Person {
             super(message);
         }
     }
-    private boolean isValidEmail(String email) {
+    private void validateName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name cannot be null.");
+        } else if (!name.matches("[a-zA-Z]+")) {
+            throw new InvalidNameFormatException("Name must contain only letters.");
+        }
+    }
+    private void validateEmail(String email) {
         // Using simple regex, can be extended to use more complex checks...
-        return email.matches(".+@.+\\..+");
+        if (!email.matches(".+@.+\\..+"))
+        {
+            throw new InvalidEmailFormatException("Invalid email format!");
+        }
     }
 }

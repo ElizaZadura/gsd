@@ -1,9 +1,18 @@
 package workshop.gsd;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.UUID;
 
 public class TodoItem {
+
+    static final String CUSTOM_PATTERN = "yyyy-MM-dd";
+    static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(CUSTOM_PATTERN);
     private final UUID id;
     private String title;
     private String description;
@@ -21,25 +30,24 @@ public class TodoItem {
      * @param creator    The creator
      * @throws IllegalArgumentException If title is null or empty, or if deadline or creator is null.
      */
-    public TodoItem(String title, String description, LocalDate deadLine, boolean done, Person creator) {
-        // Input validation: Ensure required fields are not null or empty
-        if (title == null || title.isEmpty()) {
-            throw new IllegalArgumentException("Title cannot be null or empty.");
-        }
-        if (deadLine == null) {
-            throw new IllegalArgumentException("Deadline cannot be null.");
-        }
-        if (creator == null) {
-            throw new IllegalArgumentException("Creator cannot be null.");
-        }
+    public TodoItem( String title, String description, LocalDate deadLine, boolean done, Person creator) {
+
+        validateStrings(title);
+        validateStrings(description);
+        checkDateFormat(deadLine);
+        isValidLocalDate(deadLine.toString(), DATE_TIME_FORMATTER);
+
         this.title = title;
         this.description = description;
         this.deadLine = deadLine;
         this.done = done;
+        //todo: person validation
         this.creator = creator;
         this.id = UUID.randomUUID();
     }
-
+    public TodoItem(String title, LocalDate deadLine, Person creator) {
+        this(title, null, deadLine, false, creator);
+    }
     public UUID getId() {
         return id;
     }
@@ -68,6 +76,7 @@ public class TodoItem {
     }
 
     public void setDeadLine(LocalDate deadLine) {
+        //todo: use check date method
         if (deadLine == null || deadLine.isBefore(LocalDate.now())){
             throw new IllegalArgumentException("Deadline can't be empty, and backdating not allowed");
         }
@@ -110,5 +119,45 @@ public class TodoItem {
      */
     public boolean isOverdue() {
         return LocalDate.now().isAfter(deadLine);
+    }
+
+    static class InvalidNameFormatException extends IllegalArgumentException {
+        public InvalidNameFormatException(String message) {
+            super(message);
+        }
+    }
+    static class InvalidLocalDateException extends DateTimeException {
+        public InvalidLocalDateException(String message) {
+            super(message);
+        }
+    }
+    private void validateStrings(String title) {
+        if (title == null) {
+            throw new IllegalArgumentException("Enter an acceptable value.");
+        //allowed: alphanumeric, spaces, not allowed only spaces or special characters
+        } else if (!title.matches("^(.|\\s)*[a-zA-Z]+(.|\\s)*$")) {
+            throw new TodoItem.InvalidNameFormatException("Write some proper text...");
+        }
+    }
+
+    private void checkDateFormat(LocalDate deadline) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        if (deadline == null) {
+            throw new IllegalArgumentException("Please enter a date in the format \"2000-01-01\"");
+        } else if (deadline.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("The deadline cannot be set to an earlier date");
+        }
+    }
+
+    public static LocalDate isValidLocalDate(String dateStr, DateTimeFormatter dateFormatter) {
+
+        LocalDate date = null;
+        try {
+            date = LocalDate.parse(dateStr, dateFormatter);
+        } catch (Exception e) {
+            throw new InvalidLocalDateException("It's not possible to parse the value you entered as a date!");
+        }
+        return date;
     }
 }

@@ -12,15 +12,13 @@ public class PersonTest {
     @Test
     void shouldCreatePersonWithCorrectData() {
         // Arrange: Set up the expected values and create a Person object
-        UUID expectedId = UUID.randomUUID();
+
         String expectedFirstName = "John";
         String expectedLastName = "Doe";
         String expectedEmail = "john.doe@example.com";
         Person person = new Person(expectedFirstName, expectedLastName, expectedEmail);
+        UUID expectedId = person.getId();
 
-        // Act:  No action needed here since we are testing the constructor
-
-        // Assert: Verify the person object's data
         assertEquals(expectedId, person.getId());
         assertEquals(expectedFirstName, person.getFirstName());
         assertEquals(expectedLastName, person.getLastName());
