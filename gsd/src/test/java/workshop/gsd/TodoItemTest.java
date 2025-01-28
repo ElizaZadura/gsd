@@ -3,17 +3,26 @@ package workshop.gsd;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TodoItemTest {
     @Test
     void shouldCreateTodoItemWithCorrectData() {
-        int expectedId = 1;
-        String expectedTitle = "title";
-        String expectedDescription = "description";
-        LocalDate expectedDeadline = null;
-        Boolean expectedDone = false;
-        Person expectedCreator = null;
+        UUID expectedId = UUID.randomUUID();
+        Person creator = new Person("Marvin", "Bot", "marv@bot.com");
+        LocalDate today = LocalDate.now();
 
-        TodoItem todoItem = new TodoItem(1, "title", "description", null, false, null);
+        String expectedTitle = "One";
+        String expectedDescription = "this has to be done";
+        Boolean expectedDone = false;
+
+        TodoItem todoItem = new TodoItem("title", "description", null, false, null);
+
+        // Assert: Verify the person object's data
+        assertEquals(expectedId, creator.getId());
+        assertEquals(expectedDescription, todoItem.getDescription());
+        assertEquals(today, todoItem.getDeadLine());
     }
 }

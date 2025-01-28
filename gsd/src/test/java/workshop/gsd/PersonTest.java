@@ -1,18 +1,22 @@
 package workshop.gsd;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PersonTest {
 
     @Test
     void shouldCreatePersonWithCorrectData() {
         // Arrange: Set up the expected values and create a Person object
-        int expectedId = 1;
+        UUID expectedId = UUID.randomUUID();
         String expectedFirstName = "John";
         String expectedLastName = "Doe";
         String expectedEmail = "john.doe@example.com";
-        Person person = new Person(expectedId, expectedFirstName, expectedLastName, expectedEmail);
+        Person person = new Person(expectedFirstName, expectedLastName, expectedEmail);
 
         // Act:  No action needed here since we are testing the constructor
 
@@ -24,10 +28,12 @@ public class PersonTest {
     }
 
     @Test
-    void getSummaryShouldReturnFormattedString() {
-        // Arrange
-        Person person = new Person(1, "Nisse", "Olsson", "nisse@gmail.com");
-        String expectedSummary = "{id: 1, name: Nisse Olsson, email: nisse@gmail.com}";
+    void getSummaryShouldReturnFormattedString()
+    {
+        Person person = new Person("Marvin", "Bot", "marv@bot.com");
+        UUID actualId = person.getId();
+        String expectedSummary = String.format("{id: %s, name: %s %s, email: %s}",
+                actualId, "Marvin", "Bot", "marv@bot.com");
 
         // Act
         String actualSummary = person.getSummary();
@@ -39,19 +45,19 @@ public class PersonTest {
     @Test
     void setFirstNameShouldThrowExceptionForNullValue() {
         // Arrange
-        Person person = new Person(1, "John", "Doe", "john.doe@example.com");
+        Person person = new Person("John", "Doe", "john.doe@example.com");
 
         // Act & Assert (combined for clarity, as the action is the assertion)
         assertThrows(IllegalArgumentException.class, () -> person.setFirstName(null));
     }
     @Test
 void setFirstNameShouldThrowExceptionForInvalidFormat() {
-    Person person = new Person(1, "John", "Doe", "john.doe@example.com");
+    Person person = new Person("Stefan", "Gnafs", "s.gn@ex.com");
     assertThrows(Person.InvalidNameFormatException.class, () -> person.setFirstName("John123")); // Or IllegalArgumentException
 }
 @Test
     void setEmailShouldThrowInvalidEmailFormatException(){
-        Person person = new Person(1, "John", "Doe", "john.doe@example.com");
+        Person person = new Person("Monkey", "Mankey", "mon.ma@example.com");
         assertThrows(Person.InvalidEmailFormatException.class, () -> person.setEmail("john.doe@example@com"));
 }
 }

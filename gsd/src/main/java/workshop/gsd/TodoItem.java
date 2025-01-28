@@ -1,9 +1,10 @@
 package workshop.gsd;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class TodoItem {
-    private int id;
+    private final UUID id;
     private String title;
     private String description;
     private LocalDate deadLine;
@@ -13,15 +14,14 @@ public class TodoItem {
     /**
      * Constructs a TodoItem object.
      *
-     * @param id          The ID of the todo item.
-     * @param title       The title of the todo item. Must not be null or empty.
-     * @param description A description of the todo item. Can be null.
-     * @param deadLine    The deadline of the todo item. Must not be null.
-     * @param done        Indicates if the todo item is done.
-     * @param creator    The person who created this todo item. Must not be null.
+     * @param title       Must not be null or empty.
+     * @param description   Describes it
+     * @param deadLine    The deadline
+     * @param done        Is complete
+     * @param creator    The creator
      * @throws IllegalArgumentException If title is null or empty, or if deadline or creator is null.
      */
-    public TodoItem(int id, String title, String description, LocalDate deadLine, boolean done, Person creator) {
+    public TodoItem(String title, String description, LocalDate deadLine, boolean done, Person creator) {
         // Input validation: Ensure required fields are not null or empty
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("Title cannot be null or empty.");
@@ -32,15 +32,15 @@ public class TodoItem {
         if (creator == null) {
             throw new IllegalArgumentException("Creator cannot be null.");
         }
-        this.id = id;
         this.title = title;
         this.description = description;
         this.deadLine = deadLine;
         this.done = done;
         this.creator = creator;
+        this.id = UUID.randomUUID();
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -68,8 +68,8 @@ public class TodoItem {
     }
 
     public void setDeadLine(LocalDate deadLine) {
-        if (deadLine == null) {
-            throw new IllegalArgumentException("Deadline cannot be null.");
+        if (deadLine == null || deadLine.isBefore(LocalDate.now())){
+            throw new IllegalArgumentException("Deadline can't be empty, and backdating not allowed");
         }
         this.deadLine = deadLine;
     }
@@ -99,7 +99,7 @@ public class TodoItem {
      * @return A string in the format "{id: 1, title: Make lunch, description: ..., deadline: 2025-01-31, done: false, creator: ...}".
      */
     public String getSummary() {
-        return String.format("{id: %d, title: %s, description: %s, deadline: %s, done: %s, creator: %s}",
+        return String.format("{id: %s, title: %s, description: %s, deadline: %s, done: %s, creator: %s}",
                 id, title, description, deadLine, done, creator.getSummary());
     }
 
