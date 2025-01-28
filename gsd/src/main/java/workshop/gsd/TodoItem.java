@@ -40,8 +40,6 @@ public class TodoItem {
         this.creator = creator;
     }
 
-    // Getters and Setters
-
     public int getId() {
         return id;
     }
