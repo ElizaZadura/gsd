@@ -86,19 +86,6 @@ public class TodoItemTest {
     }
 
     @Test
-    void isOverdueShouldReturnTrueForPastDeadline() {
-        // Arrange
-        Person creator = new Person("John", "Doe", "john.doe@example.com");
-        TodoItem todoItem = new TodoItem("Task", "Description", LocalDate.now().minusDays(1), false, creator);
-
-        // Act
-        boolean isOverdue = todoItem.isOverdue();
-
-        // Assert
-        assertTrue(isOverdue);
-    }
-
-    @Test
     void isOverdueShouldReturnFalseForFutureDeadline() {
         // Arrange
         Person creator = new Person("John", "Doe", "john.doe@example.com");

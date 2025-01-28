@@ -28,23 +28,24 @@ public class TodoItem {
      * @param deadLine    The deadline
      * @param done        Is complete
      * @param creator    The creator
-     * @throws IllegalArgumentException If title is null or empty, or if deadline or creator is null.
      */
     public TodoItem( String title, String description, LocalDate deadLine, boolean done, Person creator) {
 
         validateStrings(title);
         validateStrings(description);
         checkDateFormat(deadLine);
+        //todo: better date checking/validation
         isValidLocalDate(deadLine.toString(), DATE_TIME_FORMATTER);
+        checkCreator(creator);
 
         this.title = title;
         this.description = description;
         this.deadLine = deadLine;
         this.done = done;
-        //todo: person validation
         this.creator = creator;
         this.id = UUID.randomUUID();
     }
+
     public TodoItem(String title, LocalDate deadLine, Person creator) {
         this(title, null, deadLine, false, creator);
     }
@@ -150,12 +151,17 @@ public class TodoItem {
         }
     }
 
+    private void checkCreator(Person creator) {
+        if (creator == null) {
+            throw new IllegalArgumentException("The creator has to be a person.");
+        }
+    }
     public static LocalDate isValidLocalDate(String dateStr, DateTimeFormatter dateFormatter) {
 
         LocalDate date = null;
         try {
             date = LocalDate.parse(dateStr, dateFormatter);
-        } catch (Exception e) {
+        } catch (InvalidLocalDateException e) {
             throw new InvalidLocalDateException("It's not possible to parse the value you entered as a date!");
         }
         return date;
