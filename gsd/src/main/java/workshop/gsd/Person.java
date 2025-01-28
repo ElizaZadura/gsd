@@ -7,19 +7,25 @@ public class Person {
     private String email;
 
     /**
-     * Constructs a Person object. Since none of the attributes are allowed to be null, it's not necessary to have more than the default constructor, with all 4 parameters
+     * Constructs a Person object.
+     * Since none of the attributes are allowed to be null, as per assignment instructions, it's not necessary to have more than the default constructor, with all 4 parameters
      *
      * @param id        The ID of the person.
      * @param firstName The first name of the person. Must not be null.
      * @param lastName  The last name of the person. Must not be null.
      * @param email     The email address of the person. Must not be null.
-     * @throws IllegalArgumentException If firstName, lastName, or email is null.
+     * @throws IllegalArgumentException If firstName, lastName, or email is null, or firstName/lastName contains invalid characters.
      */
     public Person(int id, String firstName, String lastName, String email) {
-        // Input validation: Ensure required fields are not null
+        // Input validation:
         if (firstName == null || lastName == null || email == null) {
             throw new IllegalArgumentException("First name, last name, and email cannot be null.");
+        } else if (!firstName.matches("[a-zA-Z]+") || !lastName.matches("[a-zA-Z]+")) {
+            throw new InvalidNameFormatException("First and last name must contain only letters.");
+        } else if (!isValidEmail(email)) {
+            throw new InvalidEmailFormatException("Invalid email format!");
         }
+        //TODO: autogenerate ID instead of taking it as a parameter
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,10 +36,6 @@ public class Person {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -63,8 +65,8 @@ public class Person {
     }
 
     public void setEmail(String email) {
-        if (email == null) {
-            throw new IllegalArgumentException("Email cannot be null.");
+        if (!isValidEmail(email)) {
+            throw new InvalidEmailFormatException("Invalid email format!");
         }
         this.email = email;
     }
@@ -77,5 +79,21 @@ public class Person {
      */
     public String getSummary() {
         return String.format("{id: %d, name: %s %s, email: %s}", id, firstName, lastName, email);
+    }
+
+    // Custom Exception for invalid name format
+    static class InvalidNameFormatException extends IllegalArgumentException {
+        public InvalidNameFormatException(String message) {
+            super(message);
+        }
+    }
+    static class InvalidEmailFormatException extends IllegalArgumentException {
+        public InvalidEmailFormatException(String message) {
+            super(message);
+        }
+    }
+    private boolean isValidEmail(String email) {
+        // Using simple regex, can be extended to use more complex checks...
+        return email.matches(".+@.+\\..+");
     }
 }

@@ -23,5 +23,35 @@ public class PersonTest {
         assertEquals(expectedEmail, person.getEmail());
     }
 
-    // Add more test methods for other Person behaviors
+    @Test
+    void getSummaryShouldReturnFormattedString() {
+        // Arrange
+        Person person = new Person(1, "Nisse", "Olsson", "nisse@gmail.com");
+        String expectedSummary = "{id: 1, name: Nisse Olsson, email: nisse@gmail.com}";
+
+        // Act
+        String actualSummary = person.getSummary();
+
+        // Assert
+        assertEquals(expectedSummary, actualSummary);
+    }
+
+    @Test
+    void setFirstNameShouldThrowExceptionForNullValue() {
+        // Arrange
+        Person person = new Person(1, "John", "Doe", "john.doe@example.com");
+
+        // Act & Assert (combined for clarity, as the action is the assertion)
+        assertThrows(IllegalArgumentException.class, () -> person.setFirstName(null));
+    }
+    @Test
+void setFirstNameShouldThrowExceptionForInvalidFormat() {
+    Person person = new Person(1, "John", "Doe", "john.doe@example.com");
+    assertThrows(Person.InvalidNameFormatException.class, () -> person.setFirstName("John123")); // Or IllegalArgumentException
+}
+@Test
+    void setEmailShouldThrowInvalidEmailFormatException(){
+        Person person = new Person(1, "John", "Doe", "john.doe@example.com");
+        assertThrows(Person.InvalidEmailFormatException.class, () -> person.setEmail("john.doe@example@com"));
+}
 }
