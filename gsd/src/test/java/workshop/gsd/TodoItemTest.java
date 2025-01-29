@@ -174,39 +174,23 @@ public class TodoItemTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> todoItem.setCreator(null));
     }
-}
-/*    @Test
-    void shouldCreateTodoItemWithCorrectData() {
-
-        Person creator = new Person("Marvin", "Bot", "marv@bot.com");
-        LocalDate deadline = LocalDate.now().plusDays(1);
-
-        String expectedTitle = "One";
-        String expectedDescription = "this has to be done";
-        boolean expectedDone = false;
-
-        TodoItem todoItem = new TodoItem("One", "this has to be done", deadline, expectedDone, creator);
-
-        // Assert: Verify the person object's data
-        assertEquals(expectedTitle, todoItem.getTitle());
-        assertEquals(expectedDescription, todoItem.getDescription());
-        assertEquals(deadline, todoItem.getDeadLine());
-        assertEquals(expectedDone, todoItem.isDone());
-
-    }
 
     @Test
-    void getSummaryShouldReturnFormattedString() {
+    void shouldCreateTodoItemWithTitleDeadlineAndCreator() {
         // Arrange
-        Person creator = new Person("Marvin", "Bot", "marv@bot.com"); // Create a Person object as the creator
-        TodoItem todoItem = new TodoItem("My task", "Needs to get done", LocalDate.now().plusDays(1), false, creator);
-        UUID actualId = todoItem.getId(); // Get the actual generated UUID
-        String expectedSummary = String.format("{id: %s, title: %s, description: %s, deadline: %s, done: %s, creator: %s}",
-                actualId, "My task", "Needs to get done", todoItem.getDeadLine(), todoItem.isDone(), creator.getSummary());
+        Person creator = new Person("John", "Doe", "john.doe@example.com");
+        String title = "Buy groceries";
+        LocalDate deadline = LocalDate.now().plusDays(5);
 
         // Act
-        String actualSummary = todoItem.getSummary();
+        TodoItem todoItem = new TodoItem(title, deadline, creator);
 
         // Assert
-        assertEquals(expectedSummary, actualSummary);
-    }*/
+        assertEquals(title, todoItem.getTitle());
+        assertNull(todoItem.getDescription()); // Assuming description is null by default
+        assertEquals(deadline, todoItem.getDeadLine());
+        assertFalse(todoItem.isDone());
+        assertEquals(creator, todoItem.getCreator());
+    }
+
+}

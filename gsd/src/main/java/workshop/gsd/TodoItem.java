@@ -1,12 +1,9 @@
 package workshop.gsd;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.UUID;
 
 public class TodoItem {
@@ -32,7 +29,6 @@ public class TodoItem {
     public TodoItem( String title, String description, LocalDate deadLine, boolean done, Person creator) {
 
         validateStrings(title);
-        validateStrings(description);
         checkDateFormat(deadLine);
         //todo: better date checking/validation
         isValidLocalDate(deadLine.toString(), DATE_TIME_FORMATTER);
@@ -46,6 +42,7 @@ public class TodoItem {
         this.id = UUID.randomUUID();
     }
 
+    //todo: is description allowed to be null?
     public TodoItem(String title, LocalDate deadLine, Person creator) {
         this(title, null, deadLine, false, creator);
     }
@@ -58,9 +55,7 @@ public class TodoItem {
     }
 
     public void setTitle(String title) {
-        if (title == null || title.isEmpty()) {
-            throw new IllegalArgumentException("Title cannot be null or empty.");
-        }
+        validateStrings(title);
         this.title = title;
     }
 
