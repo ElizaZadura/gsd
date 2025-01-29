@@ -42,7 +42,6 @@ public class TodoItem {
         this.id = UUID.randomUUID();
     }
 
-    //todo: is description allowed to be null?
     public TodoItem(String title, LocalDate deadLine, Person creator) {
         this(title, null, deadLine, false, creator);
     }
@@ -72,10 +71,7 @@ public class TodoItem {
     }
 
     public void setDeadLine(LocalDate deadLine) {
-        //todo: use check date method
-        if (deadLine == null || deadLine.isBefore(LocalDate.now())){
-            throw new IllegalArgumentException("Deadline can't be empty, and backdating not allowed");
-        }
+        checkDateFormat(deadLine);
         this.deadLine = deadLine;
     }
 
