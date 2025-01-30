@@ -89,17 +89,19 @@ import java.util.concurrent.atomic.AtomicInteger;
          this.assigned = assignee != null;
      }
 
-     /**
-      * Returns a summary description of the TodoItemTask object.
-      *
-      * @return A string in the format "{id: 1, assigned: true, todoItem: ..., assignee: ...}".
-      */
-     public String getSummary() {
-         return String.format("{id: %d, assigned: %s, todoItem: %s, assignee: %s}",
-                 id, assigned, todoItem.getSummary(), assignee != null ? assignee.getSummary() : "none");
-     }
+    /**
+     * Returns a summary description of the TodoItemTask object, formatted for better readability, including a title.
+     *
+     * @return A formatted string with a title and task details including id, assignment status, todo item, and assignee.
+     */
+    public String getSummary() {
+        return String.format("TodoItemTask - Details:\n{\n" +
+                "  \"id\": %d,\n" +
+                "  \"assigned\": %s,\n" +
+                "  \"todoItem\": %s,\n" +
+                "  \"assignee\": %s\n" +
+                "}", id, assigned, todoItem.getSummary(), assignee != null ? assignee.getSummary() : "none");
+    }
 
-     public String getShortSummary() {
-         return String.format("{id: %d, assigned: %s, todoItem: %s, assignee: %s %s}", id, assigned, todoItem.getTitle(), assignee.getFirstName(), assignee.getLastName());
-     }
- }
+
+}

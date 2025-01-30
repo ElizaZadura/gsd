@@ -60,17 +60,19 @@ public class Person {
         validateEmail(email);
         this.email = email;
     }
-
-    /**
-     * Returns a summary description of the Person object.
+/**
+     * Returns a summary description of the Person object, formatted for better readability, including a title.
      *
-     * @return A string in the format "{id: 4, name: First Name, email: Iam@you.com}".
-     * In this case, using String.format seems preferable, due to readability, and it also ensures correct data types are used for formatting
+     * @return A formatted string with a title and person details including id, full name, and email.
      */
-
     public String getSummary() {
-        return String.format("{id: %s, name: %s %s, email: %s}", id, firstName, lastName, email);
+        return String.format("Person - Details:\n{\n" +
+                "  \"id\": %s,\n" +
+                "  \"name\": \"%s %s\",\n" +
+                "  \"email\": \"%s\"\n" +
+                "}", id, firstName, lastName, email);
     }
+
 
     // Custom Exception for invalid name format
     static class InvalidNameFormatException extends IllegalArgumentException {

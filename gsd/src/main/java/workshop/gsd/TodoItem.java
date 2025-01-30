@@ -93,15 +93,21 @@ public class TodoItem {
         }
         this.creator = creator;
     }
-
     /**
-     * Returns a summary description of the TodoItem object.
+     * Returns a summary description of the TodoItem object, formatted for better readability, including a title.
      *
-     * @return A string in the format "{id: 1, title: Make lunch, description: ..., deadline: 2025-01-31, done: false, creator: ...}".
+     * @return A formatted string with a title and todo item details including id, title, description, deadline, completion status, and creator.
      */
     public String getSummary() {
-        return String.format("{id: %s, title: %s, description: %s, deadline: %s, done: %s, creator: %s}",
-                id, title, description, deadLine, done, creator.getSummary());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return String.format("TodoItem - Details:\n{\n" +
+                "  \"id\": \"%s\",\n" +
+                "  \"title\": \"%s\",\n" +
+                "  \"description\": \"%s\",\n" +
+                "  \"deadline\": \"%s\",\n" +
+                "  \"done\": %s,\n" +
+                "  \"creator\": %s\n" +
+                "}", id.toString(), title, description, deadLine.format(formatter), done, creator.getSummary());
     }
 
     /**

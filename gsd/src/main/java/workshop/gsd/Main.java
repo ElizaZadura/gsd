@@ -14,9 +14,8 @@ public class Main {
         TodoItem item = new TodoItem("Item", deadLine, eliza);
         TodoItemTask task = new TodoItemTask(item, eliza);
 
-        //System.out.println(eliza.getSummary()  + "\n" + item.getSummary() + "\nRun tests to see what else is here :)");
-        //System.out.println(task.getSummary());
-        System.out.println(task.getShortSummary());
+        System.out.println(eliza.getSummary()  + "\n" + item.getSummary() + "\nRun tests to see what else is here :)");
+        System.out.println(task.getSummary());
 
     }
 }
