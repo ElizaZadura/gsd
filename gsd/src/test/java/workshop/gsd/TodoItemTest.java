@@ -9,9 +9,9 @@ public class TodoItemTest {
     @Test
     void shouldCreateTodoItemWithCorrectData() {
         // Arrange
-        Person creator = new Person("John", "Doe", "john.doe@example.com");
-        String title = "Finish homework";
-        String description = "Math and Science";
+        Person creator = new Person("Stefan", "Dear", "st.dea@example.com");
+        String title = "Finish assignment";
+        String description = "Programming workshop 1";
         LocalDate deadline = LocalDate.now().plusDays(2);
         boolean done = false;
 

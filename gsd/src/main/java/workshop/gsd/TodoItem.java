@@ -105,7 +105,7 @@ public class TodoItem {
     }
 
     /**
-     * Checks if the todo item is overdue.
+     * Checks if the item is overdue.
      *
      * @return True if the current date is after the deadline, false otherwise.
      */
