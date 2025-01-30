@@ -1,6 +1,8 @@
 package workshop.gsd;
 
+import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 
 /**
   * Represents a task associated with a TodoItem, potentially assigned to a Person.
@@ -34,8 +36,11 @@ import java.util.concurrent.atomic.AtomicInteger;
          this.assignee = assignee;
          this.assigned = assignee != null;
      }
+    public TodoItemTask(TodoItem item) {
+        this(item, null);
+    }
 
-     // Getters and Setters
+    // Getters and Setters
      /**
       * Returns the unique identifier of the task.
       * @return The task ID.
