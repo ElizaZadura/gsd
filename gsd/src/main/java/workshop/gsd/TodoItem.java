@@ -30,8 +30,6 @@ public class TodoItem {
 
         validateStrings(title);
         checkDateFormat(deadLine);
-        //todo: better date checking/validation
-        isValidLocalDate(deadLine.toString(), DATE_TIME_FORMATTER);
         checkCreator(creator);
 
         this.title = title;
@@ -96,10 +94,10 @@ public class TodoItem {
     /**
      * Returns a summary description of the TodoItem object, formatted for better readability, including a title.
      *
-     * @return A formatted string with a title and todo item details including id, title, description, deadline, completion status, and creator.
+     * @return A formatted string with a title and item details including id, title, description, deadline, completion status, and creator.
      */
     public String getSummary() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(CUSTOM_PATTERN);
         return String.format("TodoItem - Details:\n{\n" +
                 "  \"id\": \"%s\",\n" +
                 "  \"title\": \"%s\",\n" +
@@ -139,7 +137,7 @@ public class TodoItem {
     }
 
     private void checkDateFormat(LocalDate deadline) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(CUSTOM_PATTERN);
         dateFormat.setLenient(false);
         if (deadline == null) {
             throw new IllegalArgumentException("Please enter a date in the format \"2000-01-01\"");

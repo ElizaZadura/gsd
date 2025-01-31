@@ -30,9 +30,11 @@ public class PersonTest {
     {
         Person person = new Person("Marvin", "Bot", "marv@bot.com");
         UUID actualId = person.getId();
-        String expectedSummary = String.format("{id: %s, name: %s %s, email: %s}",
-                actualId, "Marvin", "Bot", "marv@bot.com");
-
+        String expectedSummary = String.format("Person - Details:\n{\n" +
+                "  \"id\": %s,\n" +
+                "  \"name\": \"%s %s\",\n" +
+                "  \"email\": \"%s\"\n" +
+                "}", actualId, "Marvin", "Bot", "marv@bot.com");
         // Act
         String actualSummary = person.getSummary();
 

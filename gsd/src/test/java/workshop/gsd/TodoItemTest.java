@@ -3,9 +3,11 @@ package workshop.gsd;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 public class TodoItemTest {
-
+    private static final String CUSTOM_PATTERN = "yyyy-MM-dd";
     @Test
     void shouldCreateTodoItemWithCorrectData() {
         // Arrange
@@ -73,10 +75,19 @@ public class TodoItemTest {
     @Test
     void getSummaryShouldReturnFormattedString() {
         // Arrange
-        Person creator = new Person("John", "Doe", "john.doe@example.com");
-        TodoItem todoItem = new TodoItem("Task", "Description", LocalDate.now().plusDays(1), false, creator);
-        String expectedSummary = String.format("{id: %s, title: %s, description: %s, deadline: %s, done: %s, creator: %s}",
-                todoItem.getId(), "Task", "Description", todoItem.getDeadLine(), false, creator.getSummary());
+        Person creator = new Person( "Marvin", "Bot", "marv@bot.com"); // Create a Person object as the creator
+        TodoItem todoItem = new TodoItem("My task", "Needs to get done", LocalDate.now().plusDays(1), false, creator);
+        UUID actualId = todoItem.getId(); // Get the actual generated UUID
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(CUSTOM_PATTERN);
+        String expectedSummary = String.format("TodoItem - Details:\n{\n" +
+                        "  \"id\": \"%s\",\n" +
+                        "  \"title\": \"%s\",\n" +
+                        "  \"description\": \"%s\",\n" +
+                        "  \"deadline\": \"%s\",\n" +
+                        "  \"done\": %s,\n" +
+                        "  \"creator\": %s\n" +
+                        "}", actualId.toString(), "My task", "Needs to get done",
+                LocalDate.now().plusDays(1).format(formatter), false, creator.getSummary());
 
         // Act
         String actualSummary = todoItem.getSummary();
