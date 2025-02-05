@@ -26,7 +26,7 @@ public class PersonTest {
     void toStringShouldReturnFormattedString() {
         // Arrange
         Person person = new Person("Boo", "Hamster", "boolikes@theforest.com");
-        String expectedString = String.format("{id: %d, name: %s %s, email: %s}",
+        String expectedString = String.format("{id: %s, name: %s %s, email: %s}",
                 person.getId(), person.getFirstName(),
                 person.getLastName(), person.getEmail());
 
