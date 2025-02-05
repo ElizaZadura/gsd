@@ -40,6 +40,14 @@ public class TodoItem {
         this.id = UUID.randomUUID();
     }
 
+    /**
+     * Constructs a TodoItem object.
+     *
+     * @param title       Must not be null or empty.
+     * @param deadLine    The deadline
+     * @param creator    The creator
+     * @throws IllegalArgumentException if the title is null or empty, if the deadline is null or before today or if the creator is null.
+     */
     public TodoItem(String title, LocalDate deadLine, Person creator) {
         this(title, null, deadLine, false, creator);
     }
