@@ -18,6 +18,7 @@ public class Person {
      * @throws IllegalArgumentException If firstName, lastName, or email is null, or firstName/lastName contains invalid characters, or the email has an incorrect format
      */
     public Person(String firstName, String lastName, String email) {
+        //todo: it doesn't add value in this case to use custom exceptions, refactoring needed!
         validateName(firstName);
         validateName(lastName);
         validateEmail(email);
@@ -28,6 +29,10 @@ public class Person {
         this.email = email;
     }
 
+    public Person(String firstName, String lastName, String email, AppUser credentials) {
+        this(firstName, lastName, email);
+        this.credentials = credentials;
+    }
     // Getters and Setters
 
     public UUID getId() {

@@ -99,23 +99,11 @@ public class TodoItem {
         }
         this.creator = creator;
     }
-    /**
-     * Returns a summary description of the TodoItem object, formatted for better readability, including a title.
-     *
-     * @return A formatted string with a title and item details including id, title, description, deadline, completion status, and creator.
-     */
-    public String getSummary() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(CUSTOM_PATTERN);
-        return String.format("TodoItem - Details:\n{\n" +
-                "  \"id\": \"%s\",\n" +
-                "  \"title\": \"%s\",\n" +
-                "  \"description\": \"%s\",\n" +
-                "  \"deadline\": \"%s\",\n" +
-                "  \"done\": %s,\n" +
-                "  \"creator\": %s\n" +
-                "}", id.toString(), title, description, deadLine.format(formatter), done, creator.getSummary());
+    @Override
+    public String toString() {
+        return String.format("{id: %s, title: %s, description: %s, deadline: %s, done: %s}",
+                id, title, description, deadLine, done);
     }
-
     /**
      * Checks if the item is overdue.
      *

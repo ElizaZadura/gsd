@@ -73,30 +73,6 @@ public class TodoItemTest {
     }
 
     @Test
-    void getSummaryShouldReturnFormattedString() {
-        // Arrange
-        Person creator = new Person( "Marvin", "Bot", "marv@bot.com"); // Create a Person object as the creator
-        TodoItem todoItem = new TodoItem("My task", "Needs to get done", LocalDate.now().plusDays(1), false, creator);
-        UUID actualId = todoItem.getId(); // Get the actual generated UUID
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(CUSTOM_PATTERN);
-        String expectedSummary = String.format("TodoItem - Details:\n{\n" +
-                        "  \"id\": \"%s\",\n" +
-                        "  \"title\": \"%s\",\n" +
-                        "  \"description\": \"%s\",\n" +
-                        "  \"deadline\": \"%s\",\n" +
-                        "  \"done\": %s,\n" +
-                        "  \"creator\": %s\n" +
-                        "}", actualId.toString(), "My task", "Needs to get done",
-                LocalDate.now().plusDays(1).format(formatter), false, creator.getSummary());
-
-        // Act
-        String actualSummary = todoItem.getSummary();
-
-        // Assert
-        assertEquals(expectedSummary, actualSummary);
-    }
-
-    @Test
     void isOverdueShouldReturnFalseForFutureDeadline() {
         // Arrange
         Person creator = new Person("John", "Doe", "john.doe@example.com");
@@ -204,4 +180,18 @@ public class TodoItemTest {
         assertEquals(creator, todoItem.getCreator());
     }
 
+    @Test
+    void toStringShouldReturnFormattedString() {
+        // Arrange
+        Person assignee = new Person("Giania", "Doh", "gee.do@example.com");
+        TodoItem todoItem = new TodoItem("Task Title", "Task Description", LocalDate.now().plusDays(1), false, new Person("John", "Doe", "john.doe@example.com"));
+        String expectedString = String.format("{id: %s, title: %s, description: %s, deadline: %s, done: %b}",
+                todoItem.getId(), todoItem.getTitle(), todoItem.getDescription(), todoItem.getDeadLine(), todoItem.isDone());
+
+        // Act
+        String actualString = todoItem.toString();
+
+        // Assert
+        assertEquals(expectedString, actualString);
+    }
 }

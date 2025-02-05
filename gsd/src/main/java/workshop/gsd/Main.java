@@ -18,7 +18,7 @@ public class Main {
             TodoItemTask task = new TodoItemTask(item, eliza);
             task.setAssignee(eliza);
 
-            logSummaries(eliza.getSummary(), item.getSummary(), task.getSummary());
+            logSummaries(eliza.toString(), item.toString(), task.toString());
         } catch (Exception e) {
             logger.log(Level.SEVERE, String.format("An error occurred: %s", e.getMessage()), e);
         }

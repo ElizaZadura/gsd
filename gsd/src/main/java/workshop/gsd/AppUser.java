@@ -16,6 +16,7 @@ public class AppUser {
      * @throws IllegalArgumentException If username, password, or role is invalid.
      */
     public AppUser(String username, String password, AppRole role) {
+
         if (username == null || username.isEmpty()) {
             throw new IllegalArgumentException("Username cannot be null or empty.");
         }

@@ -23,22 +23,19 @@ public class PersonTest {
     }
 
     @Test
-    void getSummaryShouldReturnFormattedString()
-    {
-        Person person = new Person("Marvin", "Bot", "marv@bot.com");
-        UUID actualId = person.getId();
-        String expectedSummary = String.format("Person - Details:\n{\n" +
-                "  \"id\": %s,\n" +
-                "  \"name\": \"%s %s\",\n" +
-                "  \"email\": \"%s\"\n" +
-                "}", actualId, "Marvin", "Bot", "marv@bot.com");
+    void toStringShouldReturnFormattedString() {
+        // Arrange
+        Person person = new Person("Boo", "Hamster", "boolikes@theforest.com");
+        String expectedString = String.format("{id: %d, name: %s %s, email: %s}",
+                person.getId(), person.getFirstName(),
+                person.getLastName(), person.getEmail());
+
         // Act
-        String actualSummary = person.getSummary();
+        String actualString = person.toString();
 
         // Assert
-        assertEquals(expectedSummary, actualSummary);
+        assertEquals(expectedString, actualString);
     }
-
     @Test
     void setFirstNameShouldThrowExceptionForNullValue() {
         // Arrange
