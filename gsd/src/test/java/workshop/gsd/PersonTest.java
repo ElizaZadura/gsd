@@ -1,6 +1,7 @@
 package workshop.gsd;
-import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -14,7 +15,7 @@ public class PersonTest {
         String expectedLastName = "Doe";
         String expectedEmail = "john.doe@example.com";
         Person person = new Person(expectedFirstName, expectedLastName, expectedEmail);
-        UUID expectedId = person.getId();
+        int expectedId = person.getId();
 
         assertEquals(expectedId, person.getId());
         assertEquals(expectedFirstName, person.getFirstName());
@@ -36,6 +37,7 @@ public class PersonTest {
         // Assert
         assertEquals(expectedString, actualString);
     }
+
     @Test
     void setFirstNameShouldThrowExceptionForNullValue() {
         // Arrange
@@ -44,14 +46,16 @@ public class PersonTest {
         // Act & Assert (combined for clarity, as the action is the assertion)
         assertThrows(IllegalArgumentException.class, () -> person.setFirstName(null));
     }
+
     @Test
-void setFirstNameShouldThrowExceptionForInvalidFormat() {
-    Person person = new Person("Stefan", "Gnafs", "s.gn@ex.com");
-    assertThrows(Person.InvalidNameFormatException.class, () -> person.setFirstName("John123")); // Or IllegalArgumentException
-}
-@Test
-    void setEmailShouldThrowInvalidEmailFormatException(){
+    void setFirstNameShouldThrowExceptionForInvalidFormat() {
+        Person person = new Person("Stefan", "Gnafs", "s.gn@ex.com");
+        assertThrows(Person.InvalidNameFormatException.class, () -> person.setFirstName("John123")); // Or IllegalArgumentException
+    }
+
+    @Test
+    void setEmailShouldThrowInvalidEmailFormatException() {
         Person person = new Person("Monkey", "Mankey", "mon.ma@example.com");
         assertThrows(Person.InvalidEmailFormatException.class, () -> person.setEmail("john.doe@example@com"));
-}
+    }
 }

@@ -20,4 +20,10 @@ public class PersonIdSequencer implements Sequencer {
     public int nextId() {
         return nextId.getAndIncrement();
     }
+
+    @Override
+    public int getCurrentId() {
+        return 0;
+    }
+
 }
