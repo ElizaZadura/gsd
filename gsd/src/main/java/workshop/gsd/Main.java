@@ -1,14 +1,13 @@
 package workshop.gsd;
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
     private static final Logger logger = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
 
         try {
@@ -21,7 +20,8 @@ public class Main {
             eliza.setCredentials(user);
 
             logSummaries(eliza.toString(), item.toString(), task.toString(), user.toString());
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.log(Level.SEVERE, String.format("An error occurred: %s", e.getMessage()), e);
         }
     }
