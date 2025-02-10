@@ -16,9 +16,11 @@ public class Main {
             Person eliza = new Person("Eliza", "Zadura", "eliza@zadura.se");
             TodoItem item = new TodoItem("Item", deadLine, eliza);
             TodoItemTask task = new TodoItemTask(item, eliza);
+            AppUser user = new AppUser("eliza", "password", AppRole.ROLE_APP_USER);
             task.setAssignee(eliza);
+            eliza.setCredentials(user);
 
-            logSummaries(eliza.toString(), item.toString(), task.toString());
+            logSummaries(eliza.toString(), item.toString(), task.toString(), user.toString());
         } catch (Exception e) {
             logger.log(Level.SEVERE, String.format("An error occurred: %s", e.getMessage()), e);
         }
